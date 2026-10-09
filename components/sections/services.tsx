@@ -1,29 +1,39 @@
+import Image from "next/image";
+import Link from "next/link";
+import courseImage from "@/public/images/service1.png";
+import workshopsImage from "@/public/images/service2.jpg";
+import leadershipImage from "@/public/images/service3.png";
 import { delay } from "@/lib/reveal";
 import { ArrowIcon } from "../icons";
 import { SplitText } from "../split-text";
 
-// TODO: point each href at its own page (course / workshops) once those exist.
 const services = [
   {
     name: "Online Hospitality English Course",
+    image: courseImage,
+    alt: "Trainer working on a laptop in a hotel lounge",
     title: "Practical English for Real Hospitality Situations",
     text: "Build the language skills needed to communicate confidently with guests and colleagues.",
-    cta: "Explore our course",
-    href: "#contact",
+    cta: "Explore Our Course",
+    href: "/course",
   },
   {
     name: "Hospitality Communication Workshops",
+    image: workshopsImage,
+    alt: "Two hospitality professionals in conversation over coffee",
     title: "Transform Everyday Guest Interactions into Exceptional Experiences",
     text: "Practical workshops designed to strengthen guest and team communication.",
-    cta: "Explore our workshops",
-    href: "#contact",
+    cta: "Explore Our Workshops",
+    href: "/workshops",
   },
   {
     name: "Leadership Development Workshops",
+    image: leadershipImage,
+    alt: "Trainer presenting to a room of hospitality staff",
     title: "Build Confident Hospitality Leaders",
     text: "Develop the communication skills needed to lead teams, manage challenges and give effective feedback.",
-    cta: "Explore our workshops",
-    href: "#contact",
+    cta: "Explore Our Workshops",
+    href: "/workshops",
   },
 ];
 
@@ -38,30 +48,38 @@ export function Services() {
           <SplitText text="Our Services" />
         </h2>
 
-        <ul className="mt-16 grid gap-x-6 gap-y-16 md:grid-cols-3 lg:mt-20">
+        <ul className="mt-16 grid gap-6 md:grid-cols-3 lg:mt-20">
           {services.map((service, i) => (
             <li key={service.name} data-reveal="fade" style={delay(i * 120)}>
-              <a href={service.href} className="group flex h-full flex-col">
-                {/* Image placeholder: replace with <Image> when photos are ready. */}
-                <div className="grid aspect-4/5 place-items-center overflow-hidden rounded-3xl bg-cream">
-                  <span className="eyebrow text-navy/35 transition-transform duration-700 ease-out-expo group-hover:scale-110">
-                    Image placeholder
-                  </span>
+              <article className="group flex h-full flex-col overflow-hidden rounded-3xl bg-cream">
+                <div className="relative aspect-4/3 overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    placeholder="blur"
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover transition-transform duration-1000 ease-out-expo group-hover:scale-105"
+                  />
                 </div>
-                <p className="eyebrow mt-8 text-navy/70">{service.name}</p>
-                <h3 className="mt-4 text-2xl leading-snug font-normal tracking-tight text-navy">
-                  {service.title}
-                </h3>
-                <p className="mt-4 leading-relaxed text-ink/70">
-                  {service.text}
-                </p>
-                <span className="mt-auto inline-flex items-center gap-3 pt-8 text-sm font-medium tracking-wide text-navy">
-                  {service.cta}
-                  <span className="grid h-9 w-9 place-items-center rounded-full bg-cream transition-colors duration-500 group-hover:bg-gold">
-                    <ArrowIcon className="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover:translate-x-0.5" />
-                  </span>
-                </span>
-              </a>
+                <div className="flex flex-1 flex-col p-7 lg:p-9">
+                  <h3 className="text-[clamp(1.5rem,2.1vw,1.875rem)] leading-[1.15] font-normal tracking-tight text-navy">
+                    {service.name}
+                  </h3>
+                  <p className="mt-4 text-lg leading-snug text-navy/80">
+                    {service.title}
+                  </p>
+                  <p className="mt-3 leading-relaxed text-ink/70">
+                    {service.text}
+                  </p>
+                  <div className="mt-auto pt-9">
+                    <Link href={service.href} className="btn btn-navy">
+                      {service.cta}
+                      <ArrowIcon className="btn-arrow" />
+                    </Link>
+                  </div>
+                </div>
+              </article>
             </li>
           ))}
         </ul>

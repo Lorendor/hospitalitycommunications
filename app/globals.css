@@ -30,9 +30,12 @@ body {
   color: var(--color-cream);
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 3px;
+/* In the base layer so utilities like focus:outline-none can turn it off (form fields). */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
@@ -73,10 +76,20 @@ body {
     transition: transform 0.55s var(--ease-out-expo);
   }
 
+  /*
+   * Once the fill has finished rising, swap the button's own background too,
+   * so the base colour can't show through the antialiased rounded edge.
+   */
   .btn:hover,
   .btn:focus-visible {
     color: var(--btn-hover-fg);
     border-color: var(--btn-hover-bg);
+    background-color: var(--btn-hover-bg);
+    transition:
+      color 0.45s var(--ease-out-expo),
+      border-color 0.45s var(--ease-out-expo),
+      transform 0.3s var(--ease-out-expo),
+      background-color 0s 0.4s;
   }
 
   .btn:hover::before,

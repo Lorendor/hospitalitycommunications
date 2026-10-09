@@ -1,113 +1,73 @@
 import Image from "next/image";
-import consultationImage from "@/public/images/consultation.webp";
+import tailoredImage from "@/public/images/needtailored.png";
 import { delay } from "@/lib/reveal";
 import { ArrowIcon } from "../icons";
 import { SplitText } from "../split-text";
 
 const solutions = ["Assessments", "Custom Training", "Communication Consulting"];
 
-const reasons = [
-  {
-    title: "Hospitality Expertise",
-    text: "Training built from real industry experience.",
-  },
-  {
-    title: "Practical Learning",
-    text: "Real workplace situations—not textbook English alone.",
-  },
-  {
-    title: "Industry-Specific",
-    text: "Designed specifically for hospitality teams.",
-  },
-  {
-    title: "Flexible Solutions",
-    text: "Online courses, workshops, assessments and customized training.",
-  },
-];
-
 export function Solutions() {
   return (
-    <section id="solutions" className="bg-navy py-24 text-cream lg:py-36">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-6">
-            <p data-reveal="fade" className="eyebrow text-cream/70">
-              Business Solutions
-            </p>
-            <h2
-              data-reveal="words"
-              className="mt-6 text-[clamp(2.25rem,4.6vw,4rem)] leading-[1.06] font-light tracking-tight"
-            >
-              <SplitText text="Need something more tailored?" />
-            </h2>
-            <ul
-              data-reveal="fade"
-              style={delay(200)}
-              className="mt-10 flex flex-wrap gap-3"
-            >
-              {solutions.map((solution) => (
-                <li
-                  key={solution}
-                  className="rounded-full bg-cream/10 px-5 py-2.5 text-sm tracking-wide"
-                >
-                  {solution}
-                </li>
-              ))}
-            </ul>
-            <div data-reveal="fade" style={delay(320)} className="mt-10">
-              <a href="#contact" className="btn btn-gold">
-                Book a Consultation
-                <ArrowIcon className="btn-arrow" />
-              </a>
-            </div>
-          </div>
-
-          <div
-            data-reveal="fade"
-            style={delay(150)}
-            className="relative aspect-4/3 overflow-hidden rounded-3xl lg:col-span-6"
-          >
-            <Image
-              src={consultationImage}
-              alt="A consultation between two hospitality professionals"
-              fill
-              placeholder="blur"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-        </div>
-
-        <div className="mt-24 lg:mt-36">
+    <section id="solutions" className="bg-navy py-16 text-cream sm:py-24 lg:py-32">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 lg:grid-cols-12 lg:gap-16 lg:px-10">
+        <div className="flex min-w-0 flex-col lg:col-span-6">
+          <p data-reveal="fade" className="eyebrow text-cream/70">
+            Business Solutions
+          </p>
           <h2
             data-reveal="words"
-            className="max-w-3xl text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] font-light tracking-tight"
+            className="mt-6 text-[clamp(2.25rem,4.6vw,4rem)] leading-[1.06] font-light tracking-tight"
           >
-            <SplitText text="Why Hospitality Communications?" />
+            <SplitText text="Need something more tailored?" />
           </h2>
 
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {reasons.map((reason, i) => (
+          <ul className="mt-10 grid grid-cols-1 gap-3 lg:mt-12">
+            {solutions.map((solution, i) => (
               <li
-                key={reason.title}
+                key={solution}
                 data-reveal="fade"
-                style={delay(i * 100)}
-                className="h-full"
+                style={delay(150 + i * 100)}
+                className="flex items-center gap-4 rounded-2xl bg-cream/7 px-5 py-4 transition-colors duration-500 hover:bg-cream/13 sm:gap-5 sm:px-6 sm:py-5"
               >
-                <article className="flex h-full flex-col gap-10 rounded-3xl md:gap-14 bg-cream/[0.07] p-8 transition-[background-color,translate] duration-500 ease-out-expo hover:-translate-y-1.5 hover:bg-cream/[0.13]">
-                  <span className="h-2.5 w-2.5 rounded-full bg-gold" />
-                  <div>
-                    <h3 className="text-xl font-normal tracking-tight">
-                      {reason.title}
-                    </h3>
-                    <p className="mt-3 leading-relaxed text-cream/75">
-                      {reason.text}
-                    </p>
-                  </div>
-                </article>
+                <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-gold" />
+                <h3 className="text-lg font-normal tracking-tight sm:text-xl">
+                  {solution}
+                </h3>
               </li>
             ))}
           </ul>
+
+          <div data-reveal="fade" style={delay(450)} className="mt-10">
+            <a href="#contact" className="btn btn-gold w-full sm:w-auto">
+              Book a Consultation
+              <ArrowIcon className="btn-arrow" />
+            </a>
+          </div>
+        </div>
+
+        <div
+          data-reveal="fade"
+          style={delay(150)}
+          className="relative aspect-4/3 overflow-hidden rounded-3xl lg:col-span-6 lg:aspect-auto lg:min-h-136"
+        >
+          <Image
+            src={tailoredImage}
+            alt="Trainer presenting to a room of hospitality staff"
+            fill
+            placeholder="blur"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover object-[35%_center]"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-navy-deep/60 via-transparent to-transparent" />
+          {/* Compact pill on phones, a larger glass card from sm up. */}
+          <div className="absolute bottom-3 left-3 flex items-baseline gap-2 rounded-full bg-white/10 px-4 py-2 ring-1 ring-white/20 backdrop-blur-xl ring-inset sm:bottom-6 sm:left-6 sm:block sm:rounded-2xl sm:px-6 sm:py-5">
+            <p className="text-lg leading-none font-light tracking-tight sm:text-4xl">
+              14+
+            </p>
+            <p className="text-xs text-cream/85 sm:mt-2 sm:text-sm">
+              Years in Hospitality
+            </p>
+          </div>
         </div>
       </div>
     </section>

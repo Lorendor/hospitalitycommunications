@@ -85,7 +85,7 @@ export function Contact() {
                       <span className="block text-xs tracking-[0.18em] text-cream/60 uppercase">
                         {label}
                       </span>
-                      <span className="mt-1 block text-base wrap-anywhere sm:text-lg">
+                      <span className="mt-1 block text-base wrap-anywhere sm:text-lg lg:text-[0.95rem]">
                         {value}
                       </span>
                     </span>

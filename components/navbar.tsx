@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import logoMark from "@/public/images/logo-mark.webp";
 import { navLinks, site } from "@/lib/site";
@@ -33,8 +34,8 @@ export function Navbar() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
       <div className="pointer-events-auto mx-auto flex h-16 max-w-6xl items-center justify-between rounded-full bg-cream pr-2.5 pl-5 shadow-[0_12px_40px_-18px_hsl(219_65%_16%/0.45)] ring-1 ring-navy/5">
-        <a
-          href="#top"
+        <Link
+          href="/#top"
           aria-label={`${site.name} home`}
           className="flex items-center gap-3 text-navy"
           onClick={() => setOpen(false)}
@@ -48,7 +49,7 @@ export function Navbar() {
               Communications
             </span>
           </span>
-        </a>
+        </Link>
 
         <nav
           aria-label="Main"
@@ -69,7 +70,7 @@ export function Navbar() {
             }}
           />
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               className={`relative rounded-full px-4 py-2 text-base transition-colors duration-300 xl:text-[1.0625rem] ${
@@ -82,19 +83,19 @@ export function Navbar() {
               onBlur={() => setActive(null)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-1.5">
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             className="btn btn-sm btn-navy hidden sm:inline-flex"
             onClick={() => setOpen(false)}
           >
             Book a Consultation
             <ArrowIcon className="btn-arrow" />
-          </a>
+          </Link>
 
           <button
             type="button"
@@ -130,23 +131,23 @@ export function Navbar() {
         <div className="min-h-0 overflow-hidden rounded-3xl bg-cream shadow-[0_24px_60px_-24px_hsl(219_65%_16%/0.5)] ring-1 ring-navy/5">
           <nav aria-label="Mobile" className="flex flex-col p-3">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="rounded-2xl px-4 py-3 text-xl font-light tracking-tight text-navy transition-colors duration-300 hover:bg-navy/15"
                 onClick={() => setOpen(false)}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="btn btn-navy mt-3 sm:hidden"
               onClick={() => setOpen(false)}
             >
               Book a Consultation
               <ArrowIcon className="btn-arrow" />
-            </a>
+            </Link>
           </nav>
         </div>
       </div>
