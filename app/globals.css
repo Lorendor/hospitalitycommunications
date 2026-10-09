@@ -1,26 +1,188 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand palette, taken from the current hospitalitycommunications.com theme */
+  --color-navy: hsl(219 65% 26%);
+  --color-navy-deep: hsl(219 65% 16%);
+  --color-gold: hsl(42 75% 42%);
+  --color-cream: hsl(40 100% 96%);
+  --color-ink: hsl(0 1% 13%);
+  --color-stone: hsl(60 2% 71%);
+
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-navy);
+  color: var(--color-cream);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+@layer components {
+  /* Pill button: the hover colour rises from the bottom and the arrow nudges forward. */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid var(--btn-border, transparent);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    padding: 0.95rem 1.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      color 0.45s var(--ease-out-expo),
+      border-color 0.45s var(--ease-out-expo),
+      transform 0.3s var(--ease-out-expo);
+  }
+
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--btn-hover-bg);
+    transform: translateY(102%);
+    transition: transform 0.55s var(--ease-out-expo);
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    color: var(--btn-hover-fg);
+    border-color: var(--btn-hover-bg);
+  }
+
+  .btn:hover::before,
+  .btn:focus-visible::before {
+    transform: translateY(0);
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-arrow {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.45s var(--ease-out-expo);
+  }
+
+  .btn:hover .btn-arrow,
+  .btn:focus-visible .btn-arrow {
+    transform: translateX(5px);
+  }
+
+  .btn-sm {
+    padding: 0.8rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .btn-gold {
+    --btn-bg: var(--color-gold);
+    --btn-fg: var(--color-navy-deep);
+    --btn-hover-bg: var(--color-cream);
+    --btn-hover-fg: var(--color-navy);
+  }
+
+  .btn-navy {
+    --btn-bg: var(--color-navy);
+    --btn-fg: var(--color-cream);
+    --btn-hover-bg: var(--color-gold);
+    --btn-hover-fg: var(--color-navy-deep);
+  }
+
+  .btn-outline-light {
+    --btn-bg: transparent;
+    --btn-fg: var(--color-cream);
+    --btn-border: hsl(40 100% 96% / 0.55);
+    --btn-hover-bg: var(--color-cream);
+    --btn-hover-fg: var(--color-navy);
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+}
+
+/*
+ * Scroll reveal. Elements are only hidden when scripting is available and the
+ * visitor has not asked for reduced motion, so content never gets stuck invisible.
+ * components/scroll-reveal.tsx sets data-revealed when an element enters the viewport.
+ */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal="fade"] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 1s var(--ease-out-expo),
+      transform 1s var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal="fade"][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-reveal="words"] .word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    /* room for descenders inside the clipping box */
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  [data-reveal="words"] .word > span {
+    display: inline-block;
+    transform: translateY(110%);
+    transition: transform 1s var(--ease-out-expo);
+    transition-delay: calc(var(--reveal-delay, 0ms) + var(--i) * 45ms);
+  }
+
+  [data-reveal="words"][data-revealed] .word > span {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn,
+  .btn::before,
+  .btn-arrow {
+    transition: none;
+  }
 }
